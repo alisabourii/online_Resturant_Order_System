@@ -11,7 +11,7 @@
       <form action="connection.php" method="POST">
         <div class="yemeklerDiv" id="yemeklerDiv">
                 <h3>Yemekler</h3>
-                
+
                 <label>Adana Kebab</label> <input type="number" value="0" min="0" id="adanaCount" name="adanaCount" style="margin-left: -10%;"><br><br>
 
                 <label>Şiş Kebab</label> <input type="number" value="0" min="0" id="sisCount" name="sisCount" style="margin-left: -3%;"><br><br>
@@ -38,13 +38,14 @@
         <div class="digerDiv" id="digerDiv">
                 <h3>Salata/Tatlı</h3>
 
-                <label>Mevsin Salatası</label> <input type="number" value="0" min="0" id="adanaCount" style="margin-left: -10%;"><br><br>
+                <label>Mevsin Salatası</label> 
+                <input type="number" value="0" min="0" id="mevsinCount" name="mevsinCount" style="margin-left: -10%;"><br><br>
 
-                <label>Gün Salatası</label> <input type="number" value="0" min="0" id="sisCount" style="margin-left: -3%;"><br><br>
+                <label>Gün Salatası</label> <input type="number" value="0" min="0" id="gunSalataCount" name="gunSalataCount" style="margin-left: -3%;"><br><br>
 
-                <label>Sufle</label> <input type="number" value="0" min="0" id="tavukpilavCount" style="margin-left: -6%;"><br><br>
+                <label>Sufle</label> <input type="number" value="0" min="0" id="sufleCount" name="sufleCount" style="margin-left: -6%;"><br><br>
 
-                <label>Sütlaç</label> <input type="number" value="0" min="0" id="fasuliyeCount" style="margin-left: 2%;"><br><br>
+                <label>Sütlaç</label> <input type="number" value="0" min="0" id="sutlacCount" name="sutlacCount" style="margin-left: 2%;"><br><br>
                 
         </div>
 
