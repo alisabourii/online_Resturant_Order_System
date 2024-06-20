@@ -27,13 +27,13 @@
         <div class="icecekDiv" id="icecekDiv">
                 <h3>İçecekler</h3>
 
-                <label>Ayran</label> <input type="number" value="0" min="0" id="ayranCount" name="ayranCount" style="margin-left: -10%;"><br><br>
+                <label>Ayran</label> <input type="number" value="0" min="0" id="ayranCount" name="ayranCount" style="margin-left: 0%;"><br><br>
                 
-                <label>Kola</label> <input type="number" value="0" min="0" id="kolaCount" name="kolaCount" style="margin-left: -3%;"><br><br>
+                <label>Kola</label> <input type="number" value="0" min="0" id="kolaCount" name="kolaCount" style="margin-left: 2%;"><br><br>
 
-                <label>Soda</label> <input type="number" value="0" min="0" id="sodaCount" name="sodaCount" style="margin-left: -6%;"><br><br>
+                <label>Soda</label> <input type="number" value="0" min="0" id="sodaCount" name="sodaCount" style="margin-left: 2%;"><br><br>
 
-                <label>Su</label> <input type="number" value="0" min="0" id="suCount" name="suCount" style="margin-left: 2%;"><br><br>
+                <label>Su</label> <input type="number" value="0" min="0" id="suCount" name="suCount" style="margin-left: 6%;"><br><br>
         </div>
         <div class="digerDiv" id="digerDiv">
                 <h3>Salata/Tatlı</h3>
@@ -43,13 +43,13 @@
 
                 <label>Gün Salatası</label> <input type="number" value="0" min="0" id="gunSalataCount" name="gunSalataCount" style="margin-left: -3%;"><br><br>
 
-                <label>Sufle</label> <input type="number" value="0" min="0" id="sufleCount" name="sufleCount" style="margin-left: -6%;"><br><br>
+                <label>Sufle</label> <input type="number" value="0" min="0" id="sufleCount" name="sufleCount" style="margin-left: 12%;"><br><br>
 
-                <label>Sütlaç</label> <input type="number" value="0" min="0" id="sutlacCount" name="sutlacCount" style="margin-left: 2%;"><br><br>
+                <label>Sütlaç</label> <input type="number" value="0" min="0" id="sutlacCount" name="sutlacCount" style="margin-left: 10%;"><br><br>
                 
         </div>
 
-        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 45%; margin-top: 10%;" class="btn btn-primary">Kaydet</Button>
+        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 20%; margin-top: 10%;" class="btn btn-primary">Kaydet</Button>
         </form>
 </body>
 </html>
