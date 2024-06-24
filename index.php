@@ -8,6 +8,7 @@
         
 </head>
 <body>
+        <h1 style="margin-left: 38%;">Sipareş Kayıdı</h1>
       <form action="connection.php" method="POST">
         <div class="yemeklerDiv" id="yemeklerDiv">
                 <h3>Yemekler</h3>
@@ -50,6 +51,10 @@
         </div>
 
         <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 20%; margin-top: 10%;" class="btn btn-primary">Kaydet</Button>
+        </form>
+
+        <form action="fiyatBelirlemePaneli.php">
+                <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 46%; margin-top: 2.5%;" class="btn btn-primary">Fiyat Belirle</Button>
         </form>
 </body>
 </html>
