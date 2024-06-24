@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="style.css">
 
 </head>
-<body style="background-color: burlywood;">
+<body style="background-color:darkcyan">
         
 </body>
 </html>
@@ -23,108 +23,130 @@ if($conn -> connect_error) {
         die("". $conn -> connect_error);
 }
 
-$todayDate = date("d.m.y"); 
-$toplamFiyat = 0;
-$siparesler = "";
+$sql = "select * from pricetable WHERE id='1'"; 
+$result = ($conn->query($sql)); 
+//declare array to store the data of database 
+$row = [];  
 
-$adana = $_POST['adanaCount'];
-if($adana != '0') {  
-        $toplamFiyat +=   intval($adana) * 180; 
-        $siparesler .= "Adana ".$adana."P";
+if ($result->num_rows > 0)  
+{ 
+        // fetch all data from db into array  
+        $row = $result->fetch_all(MYSQLI_ASSOC);   
+} 
+
+if(!empty($row)) 
+foreach($row as $rows) 
+        {  
+        $todayDate = date('Y-m-d', time()); 
+        $toplamFiyat = 0;
+        $siparesler = "";
+
+        $adana = $_POST['adanaCount'];
+        if($adana != '0') {  
+                $toplamFiyat +=   intval($adana) * $rows["AdanaFiyat"]; 
+                $siparesler .= "Adana ".$adana."P";
+                }
+
+        $sis = $_POST['sisCount'];
+        if($sis != '0') {  
+                $toplamFiyat +=   intval($sis) * $rows["SisFiyat"]; 
+                $siparesler .= ", Şiş ".$sis."P";
+                }
+
+        $tavuk  = $_POST['tavukpilavCount'];
+        if($tavuk != '0') {  
+                $toplamFiyat +=   intval($tavuk) * $rows["TavukpFiyat"]; 
+                $siparesler .= ", Tavuk ".$tavuk."P";
+                }
+
+        $fasuliye  = $_POST['fasuliyeCount'];
+        if($fasuliye != '0') {  
+                $toplamFiyat +=   intval($fasuliye) * $rows["FasulyeFiyat"]; 
+                $siparesler .= ", Fasuliye ".$fasuliye."P";
+                }
+
+
+        $mercimek   = $_POST['mercimekCount'];
+        if($fasuliye != '0') {  
+                $toplamFiyat +=   intval($mercimek) * $rows["MercimekFiyat"]; 
+                $siparesler .= ", Mercimek çorbası ".$mercimek."P";
+                }
+
+        $tavukCorbasi    = $_POST['tavukcorasiCount'];
+        if($tavukCorbasi != '0') {  
+                $toplamFiyat +=   intval($tavukCorbasi) * $rows["TavukCFiyat"]; 
+                $siparesler .= ", Tavuk çorbası  ".$tavukCorbasi."P";
+                }
+
+        $ayran    = $_POST['ayranCount'];
+        if($ayran != '0') {  
+                $toplamFiyat +=   intval($ayran) * $rows["AyranFiyat"]; 
+                $siparesler .= ", Ayran  ".$ayran."P";
+                }
+
+                $kola    = $_POST['kolaCount'];
+        if($kola != '0') {  
+                $toplamFiyat +=   intval($kola) * $rows["KolaFiyat"]; 
+                $siparesler .= ", Kola  ".$kola."P";
+                }
+
+        $su    = $_POST['suCount'];
+        if($su != '0') {  
+                $toplamFiyat +=   intval($su) * $rows["SuFiyat"]; 
+                $siparesler .= ", Su  ".$su."P";
+                }
+
+        $soda    = $_POST['sodaCount'];
+        if($soda != '0') {  
+                $toplamFiyat +=   intval($soda) * $rows["SodaFiyat"]; 
+                $siparesler .= ", Soda  ".$soda."P";
+                }
+
+        $mevsinsalata  = $_POST['mevsinCount'];
+        if($mevsinsalata != '0') {  
+                $toplamFiyat +=   intval($mevsinsalata) * $rows["MevsinSFiyat"]; 
+                $siparesler .= ", Mevsin Salatası  ".$mevsinsalata."P";
+                }
+
+        $gunsalatasi    = $_POST['gunSalataCount'];
+        if($gunsalatasi != '0') {  
+                $toplamFiyat +=   intval($gunsalatasi) * $rows["GunSFiyat"]; 
+                $siparesler .= ", Gün Salatası  ".$gunsalatasi."P";
+                }
+
+        $sufle    = $_POST['sufleCount'];
+        if($sufle != '0') {  
+                $toplamFiyat +=   intval($sufle) * $rows["SufleFiyat"]; 
+                $siparesler .= ", Sufle  ".$sufle."P";
+                }
+
+        $sutlac    = $_POST['sutlacCount'];
+        if($sutlac != '0') {  
+                $toplamFiyat +=   intval($sutlac) * $rows["SutlacFiyat"]; 
+                $siparesler .= ", Sütlaç  ".$sutlac."P";
+                }
+
+                //
+        if($siparesler != '' && $toplamFiyat != 0) {
+                $sql = "INSERT INTO resturanttable(tarih, orders,totoalPrice) VALUE('$todayDate', '$siparesler', '$toplamFiyat')";
+                echo "Tarih :".$todayDate;
+                echo "<div style='margin-left: 40%; margin-top: 10%; font-size:30px'>";
+                if($conn->query($sql) === TRUE) {echo 'Kayıt Başarılı'; echo '<br><br>';}
+                else{echo 'Error'.$sql."<br>".$conn->error;}
+                echo "</div>";
+
+                echo "<div style='margin-left: 10%; margin-top: 5%; font-size:30px' width: 40%;>";
+                echo "Sipareşler:  ".$siparesler; echo '<br><br>';
+                echo "</div>";
+
+                echo "<div style='margin-left: 40%; margin-top: 3%; font-size:30px' >";
+                echo "Toplam Fiyat:  ". $toplamFiyat; echo '<br><br>';
+                echo "</div>";
+        
+                echo "<div style='margin-left: 30%; margin-top: 3%; font-size:30px'>";
+                echo '<form action="index.php" method="POST"> <button style="margin-left: 20%;">Sayfaya Dön</button> </form>';
+                echo "</div>";
         }
-
-$sis = $_POST['sisCount'];
-if($sis != '0') {  
-        $toplamFiyat +=   intval($sis) * 200; 
-        $siparesler .= ", Şiş ".$sis."P";
-        }
-
-$tavuk  = $_POST['tavukpilavCount'];
-if($tavuk != '0') {  
-        $toplamFiyat +=   intval($tavuk) * 140; 
-        $siparesler .= ", Tavuk ".$tavuk."P";
-        }
-
-$fasuliye  = $_POST['fasuliyeCount'];
-if($fasuliye != '0') {  
-        $toplamFiyat +=   intval($fasuliye) * 100; 
-        $siparesler .= ", Fasuliye ".$fasuliye."P";
-        }
-
-
-$mercimek   = $_POST['mercimekCount'];
-if($fasuliye != '0') {  
-        $toplamFiyat +=   intval($mercimek) * 80; 
-        $siparesler .= ", Mercimek çorbası ".$mercimek."P";
-        }
-
-$tavukCorbasi    = $_POST['tavukcorasiCount'];
-if($tavukCorbasi != '0') {  
-        $toplamFiyat +=   intval($tavukCorbasi) * 90; 
-        $siparesler .= ", Tavuk çorbası  ".$tavukCorbasi."P";
-        }
-
-$ayran    = $_POST['ayranCount'];
-if($ayran != '0') {  
-        $toplamFiyat +=   intval($ayran) * 20; 
-        $siparesler .= ", Ayran  ".$ayran."P";
-        }
-
-        $kola    = $_POST['kolaCount'];
-if($kola != '0') {  
-        $toplamFiyat +=   intval($kola) * 20; 
-        $siparesler .= ", Kola  ".$kola."P";
-        }
-
-$su    = $_POST['suCount'];
-if($su != '0') {  
-        $toplamFiyat +=   intval($su) * 15; 
-        $siparesler .= ", Su  ".$su."P";
-        }
-
-$soda    = $_POST['sodaCount'];
-if($soda != '0') {  
-        $toplamFiyat +=   intval($soda) * 20; 
-        $siparesler .= ", Soda  ".$soda."P";
-        }
-
-$mevsinsalata  = $_POST['mevsinCount'];
-if($mevsinsalata != '0') {  
-        $toplamFiyat +=   intval($mevsinsalata) * 50; 
-        $siparesler .= ", Mevsin Salatası  ".$mevsinsalata."P";
-        }
-
-$gunsalatasi    = $_POST['gunSalataCount'];
-if($gunsalatasi != '0') {  
-        $toplamFiyat +=   intval($gunsalatasi) * 35; 
-        $siparesler .= ", Gün Salatası  ".$gunsalatasi."P";
-        }
-
-$sufle    = $_POST['sufleCount'];
-if($sufle != '0') {  
-        $toplamFiyat +=   intval($sufle) * 50; 
-        $siparesler .= ", Sufle  ".$sufle."P";
-        }
-
-$sutlac    = $_POST['sutlacCount'];
-if($sutlac != '0') {  
-        $toplamFiyat +=   intval($sutlac) * 50; 
-        $siparesler .= ", Sütlaç  ".$sutlac."P";
-        }
-
-        //
-if($siparesler != '' && $toplamFiyat != 0) {
-        $sql = "INSERT INTO resturanttable(tarih, orders,totoalPrice) VALUE('$todayDate', '$siparesler', '$toplamFiyat')";
-        echo "<div style='margin-left: 30%; margin-top: 10%; font-size:30px'>";
-        if($conn->query($sql) === TRUE) {echo 'Kayıt Başarılı'; echo '<br><br>';}
-        else{echo 'Error'.$sql."<br>".$conn->error;}
-
-        echo "Sipareşler:  ".$siparesler; echo '<br><br>';
-        echo "Toplam Fiyat:  ". $toplamFiyat; echo '<br><br>';
-
-        echo '<form action="index.php" method="POST"> <button style="margin-left: 20%;">Sayfaya Dön</button> </form>';
-
-        echo "</div>";
 }
 
 //Kaydetmeye göstermemeke ve sadece kaydetmek
