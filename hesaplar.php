@@ -11,11 +11,11 @@
 <body>
     <Button  class="glow-on-hover" style="margin-left: 30%; width: 40%;" onclick="location.href='index.php'">Ana Sayfa</Button>
     <form action="" method="post" >
-        <Button type="sumbit" name='sumbitGun' id="sumbitGun" style="margin-left: 7%;" class="glow-on-hover" onclick="<?php sqlHesapTable("SELECT * from resturanttable WHERE tarih > '2024-06-30'"); ?>">Gün</Button>
+        <Button type="sumbit" name='sumbitGun' id="sumbitGun" style="margin-left: 7%;" class="glow-on-hover">Gün</Button>
 
-        <Button type="sumbit" name='sumbitHafta' id="sumbitHafta" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" onclick="<?php sqlHesapTable("SELECT * from resturanttable"); ?>">Hafta</Button>
+        <Button type="sumbit" name='sumbitHafta' id="sumbitHafta" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Hafta</Button>
 
-        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Ay</Button>
+        <Button type="sumbit" name='sumbitAy' id="sumbitAy" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Ay</Button>
 
         <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" style="width: 40%;">Yıllık</Button>
     </form>
@@ -55,18 +55,31 @@
             } else {
                 echo "0 results";
             }
-            echo"Tamam";
             $conn->close();
         }
 
         $todayDate = date('Y-m-d', time());
+        $lastmonth ="2024-06-30";
+
+        function foundDate($command){
+        $date = new DateTime();
+        $lastMonth = $date->modify("".$command."");
+        echo $date->format('Y-m-d')."<br>";
+        return $date->format('Y-m-d');
+        }
+
         if (isset($_POST['sumbitGun'])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '2024-06-30'");
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last day"))."'");
         }
         else if(isset($_POST["sumbitHafta"])) {
-            sqlHesapTable("SELECT * from resturanttable");
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last week"))."'");
         }
+        else if(isset($_POST["sumbitAy"])) {
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
+        }
+        
         ?>
+
         </tbody>
         <tfooter>
         </tfooter>
