@@ -17,7 +17,7 @@
 
         <Button type="sumbit" name='sumbitAy' id="sumbitAy" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Ay</Button>
 
-        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" style="width: 40%;">Yıllık</Button>
+        <Button type="sumbit" name='sumbitYil' id="sumbitYil" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" style="width: 40%;">Yıllık</Button>
     </form>
         <br><br>
 
@@ -64,7 +64,7 @@
         function foundDate($command){
         $date = new DateTime();
         $lastMonth = $date->modify("".$command."");
-        echo $date->format('Y-m-d')."<br>";
+        echo "Başlangıç Tarihi".$date->format('Y-m-d')."<br>";
         return $date->format('Y-m-d');
         }
 
@@ -77,7 +77,9 @@
         else if(isset($_POST["sumbitAy"])) {
             sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
         }
-        
+        else if(isset($_POST["sumbitYil"])) {
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last year"))."'");
+        }
         ?>
 
         </tbody>
