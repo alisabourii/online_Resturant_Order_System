@@ -11,11 +11,11 @@
 <body>
     <Button  class="glow-on-hover" style="margin-left: 30%; width: 40%;" onclick="location.href='index.php'">Ana Sayfa</Button>
     <form action="" method="post" >
-        <Button type="sumbit" name='sumbitGun' id="sumbitGun" style="margin-left: 7%;" class="glow-on-hover">Gün</Button>
+        <Button type="sumbit" name='sumbitGun' id="sumbitGun" style="margin-left: 7%;" class="glow-on-hover">Günlük</Button>
 
-        <Button type="sumbit" name='sumbitHafta' id="sumbitHafta" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Hafta</Button>
+        <Button type="sumbit" name='sumbitHafta' id="sumbitHafta" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Haftalık</Button>
 
-        <Button type="sumbit" name='sumbitAy' id="sumbitAy" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Ay</Button>
+        <Button type="sumbit" name='sumbitAy' id="sumbitAy" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover">Aylık</Button>
 
         <Button type="sumbit" name='sumbitYil' id="sumbitYil" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" style="width: 40%;">Yıllık</Button>
     </form>
@@ -57,6 +57,28 @@
             }
             $conn->close();
         }
+        function totalSels($sql){      
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "test1";
+
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+                $row = $result->fetch_assoc();
+                $total = $row['Total'];
+                echo "<h1>Toplam: ". $total ."</h1>";
+            }
+            else{
+                echo "Sonuç Bulunmadı";
+            }
+        }
 
         $todayDate = date('Y-m-d', time());
         $lastmonth ="2024-06-30";
@@ -64,21 +86,26 @@
         function foundDate($command){
         $date = new DateTime();
         $lastMonth = $date->modify("".$command."");
-        echo "Başlangıç Tarihi".$date->format('Y-m-d')."<br>";
         return $date->format('Y-m-d');
         }
 
+        $totalStatus = 0;
+
         if (isset($_POST['sumbitGun'])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last day"))."'");
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-1 day"))."'");            
+            $totalStatus =1; 
         }
         else if(isset($_POST["sumbitHafta"])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last week"))."'");
-        }
+            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-7 day"))."'");
+            $totalStatus =2; 
+        } 
         else if(isset($_POST["sumbitAy"])) {
             sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
+            $totalStatus =3; 
         }
         else if(isset($_POST["sumbitYil"])) {
             sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last year"))."'");
+            $totalStatus =4; 
         }
         ?>
 
@@ -87,6 +114,17 @@
         </tfooter>
     </table>
     
+    <?php
+        if($totalStatus == 1)
+            totalSels("SELECT SUM(totoalPrice) as Total from resturanttable WHERE tarih > '".(foundDate("-1 day"))."'");
+        else if($totalStatus == 2)
+            totalSels("SELECT SUM(totoalPrice) as Total from resturanttable WHERE tarih > '".(foundDate("-7 day"))."'");
+        else if($totalStatus == 3)
+            totalSels("SELECT SUM(totoalPrice) as Total from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
+        else if($totalStatus == 4)
+            totalSels("SELECT SUM(totoalPrice) as Total from resturanttable WHERE tarih > '".(foundDate("last year"))."'");
+
+    ?>
 </body>
 
 
