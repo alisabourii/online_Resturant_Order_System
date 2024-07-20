@@ -9,7 +9,8 @@
 
 
 <body>
-    <Button  class="glow-on-hover" style="margin-left: 30%; width: 40%;" onclick="location.href='index.php'">Ana Sayfa</Button>
+    <Button  class="glow-on-hover" style="margin-left: 25%; width: 20%; float: left;" onclick="location.href='index.php'">Ana Sayfa</Button>
+    <Button  class="glow-on-hover" style="margin-left: 5%; width: 20%;" onclick="location.href='profit.php'">Kâr</Button>
     <form action="" method="post" >
         <Button type="sumbit" name='sumbitGun' id="sumbitGun" style="margin-left: 7%;" class="glow-on-hover">Günlük</Button>
 
