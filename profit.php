@@ -50,12 +50,38 @@
                         if($conn->connect_error){
                                 die("Connection filed: ". $conn->connect_error);
                         }
-                        /*$sql = "INSERT INTO profhistory(tarih,buys,sels,profit) VALUES('$tarih', '$harc', '$satis', '$kar')";*/
-                        if($conn->query($sql) === TRUE) {echo '</br>Kayıt Başarılı';}
+                       
+                        if($conn->query($sql) === TRUE) {
+                                echo '</br>Kayıt Başarılı';}
+
                         else{echo '</br> Error: '.$sql."<br>".$conn->error;
-                        echo "</br> </br> </br>";
-                        echo "Her Gün için Sadece bir kere veri ekleyebilirsiniz!";}
+                                echo "</br> </br> </br>";
+                                echo "Her Gün için Sadece bir kere veri ekleyebilirsiniz!";}
                 }
+
+                function showSql($sql){
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "test1";
+                        $conn = new mysqli($servername, $username, $password, $dbname); 
+
+                        $result = $conn->query($sql);
+                        echo "</br>";
+                        if($result->num_rows > 0){
+                                while($row = $result->fetch_assoc()){
+                                        echo "". $row['profit'];
+                                        return $row['profit'];
+                                }
+                        }
+                        else{
+                                echo "Belirlediğiniz Tarihte Kar Kaydıdı bulunmamiş";
+                                return 0;
+                        }
+
+                }
+
+
                 $userInputDate = $_POST['dateName'];
                 $userBuys = intval($_POST['alisName']);
                 $userSels = intval($_POST['satisName']);
@@ -80,10 +106,10 @@
                         }
                 }
                 else if(isset($_POST['bul'])){
-
+                        showSql("SELECT profit from profhistory WHERE tarih = '".($userInputDate)."'");
                 }
                 else if(isset($_POST['sil'])){
-                        
+
                 }
         ?>
 </body>
