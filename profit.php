@@ -70,7 +70,7 @@
                         echo "</br>";
                         if($result->num_rows > 0){
                                 while($row = $result->fetch_assoc()){
-                                        echo "". $row['profit'];
+                                        echo "Belili olan Tarihin Kar miktari: ". $row['profit'] ."TL";
                                         return $row['profit'];
                                 }
                         }
