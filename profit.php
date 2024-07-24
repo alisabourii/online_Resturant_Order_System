@@ -52,19 +52,28 @@
                         echo "</br> </br> </br>";
                         echo "Her Gün için Sadece bir kere veri ekleyebilirsiniz!";}
                 }
-                if($_POST['dateName'] != null && $_POST['alisName'] != null && $_POST['satisName'] != null){
-                        $userInputDate = $_POST['dateName'];
-                        $userBuys = intval($_POST['alisName']);
-                        $userSels = intval($_POST['satisName']);
-                        /*echo $userInputDate. "</br>";
-                        echo $userBuys. "</br>";
-                        echo $userSels. "</br>"; 
-                        echo  $userSels - $userBuys;  */ 
-                        $kar = $userSels - $userBuys;
-                        ControllerProfits("INSERT INTO profhistory(tarih,buys,sels,profit) VALUES('$userInputDate', '$userBuys', '$userSels', '$kar')");
+                $userInputDate = $_POST['dateName'];
+                $userBuys = intval($_POST['alisName']);
+                $userSels = intval($_POST['satisName']);
+                $kar = $userSels - $userBuys;
+                if(isset($_POST['kaydet'])){
+                        if($_POST['dateName'] != null && $_POST['alisName'] != null && $_POST['satisName'] != null){
+                                ControllerProfits("INSERT INTO profhistory(tarih,buys,sels,profit) VALUES('$userInputDate', '$userBuys', '$userSels', '$kar')");
+                        }
+                        else{
+                                echo "</br>Girilen Değerleri kontrol edin";
+                        }
                 }
-                else{
-                        echo "</br>Girilen Değerleri kontrol edin";
+                else if(isset($_POST['yenidenKaydet'])){
+                        if($_POST['dateName'] != null && $_POST['alisName'] != null && $_POST['satisName'] != null){
+                                ControllerProfits("UPDATE profhistory SET buys='$userBuys',
+                                  sels='$userSels' , 
+                                 profit='$kar' 
+                                 WHERE tarih = '$userInputDate'");
+                        }
+                        else{
+                                echo "</br>Girilen Değerleri kontrol edin";
+                        }
                 }
         ?>
 </body>
