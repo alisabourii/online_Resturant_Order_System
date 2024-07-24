@@ -33,6 +33,10 @@
                 class="glow-on-hover" style="width: 40%;">Kaydet</Button>
 
                 <Button type="sumbit" name='yenidenKaydet' id="yenidenKaydet" style="margin-left: 0%; margin-top: 5%;" class="glow-on-hover" style="width: 40%;">Yeniden Kaydet</Button>
+
+                <Button type="sumbit" name='bul' id="bul" style="margin-left: 0%; margin-top: 5%;" class="glow-on-hover" style="width: 40%;">Bul</Button>
+
+                <Button type="sumbit" name='sil' id="sil" style="margin-left: 0%; margin-top: 5%;" class="glow-on-hover" style="width: 40%;">Sil</Button>
        </form>
         <?php 
                 function ControllerProfits($sql){
@@ -74,6 +78,12 @@
                         else{
                                 echo "</br>Girilen Değerleri kontrol edin";
                         }
+                }
+                else if(isset($_POST['bul'])){
+
+                }
+                else if(isset($_POST['sil'])){
+                        
                 }
         ?>
 </body>
