@@ -23,8 +23,8 @@
 <body>
         <form action="" method="post" style="margin-left: 10%; margin-top:1%; font-size:25px;">
 
-                Tarih: <input type="date" name="dateName"><br><br>
-
+                Tarih: <input type="date" name="dateName" value="<?php echo date("Y-m-d"); ?>"><br><br>
+                
                 <div class="divStyle">Alış: <input type="number" name="alisName" style="width: 30%;"> </div>
 
                 <div class="divStyle">Satış: <input type="number" name="satisName" style="width: 30%;"><br><br></div>
@@ -52,12 +52,34 @@
                         }
                        
                         if($conn->query($sql) === TRUE) {
-                                echo '</br>Kayıt Başarılı';}
+                                echo '</br>Kayıt/Silme Başarılı';}
 
                         else{echo '</br> Error: '.$sql."<br>".$conn->error;
                                 echo "</br> </br> </br>";
                                 echo "Her Gün için Sadece bir kere veri ekleyebilirsiniz!";}
                 }
+                function totalSels($sql){      
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "test1";
+            
+                        // Create connection
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        // Check connection
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+                        $result = $conn->query($sql);
+                        if($result->num_rows >0){
+                            $row = $result->fetch_assoc();
+                            $total = $row['Total'];
+                            echo "<h1>Toplam: ". $total ."</h1>";
+                        }
+                        else{
+                            echo "Sonuç Bulunmadı";
+                        }
+                    }
 
                 function showSql($sql){
                         $servername = "localhost";
@@ -80,6 +102,8 @@
                         }
 
                 }
+
+
 
                 if(isset($_POST['kaydet'])){
                         $userInputDate = $_POST['dateName'];  $userBuys = intval($_POST['alisName']);
@@ -109,8 +133,10 @@
                         showSql("SELECT profit from profhistory WHERE tarih = '".($userInputDate)."'");
                 }
                 else if(isset($_POST['sil'])){
-
+                        $userInputDate = $_POST['dateName'];
+                        ControllerProfits("DELETE from profhistory WHERE tarih = '".($userInputDate)."'");
                 }
         ?>
+
 </body>
 </html>
