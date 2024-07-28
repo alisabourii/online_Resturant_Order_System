@@ -81,12 +81,9 @@
 
                 }
 
-
-                $userInputDate = $_POST['dateName'];
-                $userBuys = intval($_POST['alisName']);
-                $userSels = intval($_POST['satisName']);
-                $kar = $userSels - $userBuys;
                 if(isset($_POST['kaydet'])){
+                        $userInputDate = $_POST['dateName'];  $userBuys = intval($_POST['alisName']);
+                        $userSels = intval($_POST['satisName']);  $kar = $userSels - $userBuys;
                         if($_POST['dateName'] != null && $_POST['alisName'] != null && $_POST['satisName'] != null){
                                 ControllerProfits("INSERT INTO profhistory(tarih,buys,sels,profit) VALUES('$userInputDate', '$userBuys', '$userSels', '$kar')");
                         }
@@ -95,6 +92,8 @@
                         }
                 }
                 else if(isset($_POST['yenidenKaydet'])){
+                        $userInputDate = $_POST['dateName'];    $userBuys = intval($_POST['alisName']);
+                        $userSels = intval($_POST['satisName']);  $kar = $userSels - $userBuys;
                         if($_POST['dateName'] != null && $_POST['alisName'] != null && $_POST['satisName'] != null){
                                 ControllerProfits("UPDATE profhistory SET buys='$userBuys',
                                   sels='$userSels' , 
@@ -106,6 +105,7 @@
                         }
                 }
                 else if(isset($_POST['bul'])){
+                        $userInputDate = $_POST['dateName'];
                         showSql("SELECT profit from profhistory WHERE tarih = '".($userInputDate)."'");
                 }
                 else if(isset($_POST['sil'])){
