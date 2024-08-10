@@ -3,58 +3,108 @@
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Resutant Project</title>
+        <title>Document</title>
         <link rel="stylesheet" href="style.css">
-        
 </head>
 <body>
-        <h1 style="margin-left: 38%;">Sipareş Kayıdı</h1>
-      <form action="connection.php" method="POST">
-        <div class="yemeklerDiv" id="yemeklerDiv">
-                <h3>Yemekler</h3>
+        <div class="formDiv">
+                <form action="" method="post" style="margin-left: 10%; margin-top: 5%;">
+                        <input type="text" name="deutschWort" placeholder="Deutsch Wort">
+                        <input type="text" name="englihWord"  placeholder="Enlish Word">
+                        <input type="text" name="turkceKelime" placeholder="Türkçe Kelime"><br><br>
+                        <input type="text" name="comment" placeholder="comment" style="width: 49.5%;"><br><br>
 
-                <label>Adana Kebab</label> <input type="number" value="0" min="0" id="adanaCount" name="adanaCount" style="margin-left: -10%;"><br><br>
+                        <Button type="submit" name="saveSumbit" id="saveSumbit" style="margin: auto" class="glow-on-hover">Save</Button>
+                </form>
+        </div><br>
 
-                <label>Şiş Kebab</label> <input type="number" value="0" min="0" id="sisCount" name="sisCount" style="margin-left: -3%;"><br><br>
-
-                <label>Tavuk pilav</label> <input type="number" value="0" min="0" id="tavukpilavCount" name="tavukpilavCount" style="margin-left: -6%;"><br><br>
-
-                <label>Fasulye</label> <input type="number" value="0" min="0" id="fasuliyeCount" name="fasuliyeCount" style="margin-left: 2%;"><br><br>
-
-                <label>Mercimek Çorbası</label> <input type="number" value="0" min="0" id="mercimekCount" name="mercimekCount" style="margin-left: -20%;"><br><br>
-
-                <label>Tavuk Çorbası</label> <input type="number" value="0" min="0" id="tavukcorasiCount" name="tavukcorasiCount" style="margin-left: -12%;"><br><br>
-        </div>
-        <div class="icecekDiv" id="icecekDiv">
-                <h3>İçecekler</h3>
-
-                <label>Ayran</label> <input type="number" value="0" min="0" id="ayranCount" name="ayranCount" style="margin-left: 0%;"><br><br>
+        <div class="formDiv">
                 
-                <label>Kola</label> <input type="number" value="0" min="0" id="kolaCount" name="kolaCount" style="margin-left: 2%;"><br><br>
-
-                <label>Soda</label> <input type="number" value="0" min="0" id="sodaCount" name="sodaCount" style="margin-left: 2%;"><br><br>
-
-                <label>Su</label> <input type="number" value="0" min="0" id="suCount" name="suCount" style="margin-left: 6%;"><br><br>
+                <form action="" method="post">
+                        <div class="scrollDiv">
+                                <table border='5' style="text-align:center;">
+                                        <thead>
+                                                <th>Deutsch</th>
+                                                <th>English</th>
+                                                <th>Türkçe</th>
+                                        </thead>
+                                        
+                                        <tbody>
+                                        <?php
+                                                $sqlC = new sqlController();
+                                                $sqlC->showSql("SELECT * FROM `dictionarytable`"); 
+                                        ?>
+                                        </tbody>
+                                </table>
+                        </div>
+                </form>
         </div>
-        <div class="digerDiv" id="digerDiv">
-                <h3>Salata/Tatlı</h3>
+        <?php
+        class sqlController{
+                function sqlQueryDone($sql){
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "dictionarydb";
+        
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        if($conn -> connect_error){
+                         die("Fehler beim Herstellen einer Verbindung./Error to connect./Bağlantı hatası.");
+                        }
+                        if($conn ->query($sql) === True){
+                                echo "</h2>Zum Speichern erledigt</h2>";
+                        }
+                        else{
+                                echo '</br> Error: '.$sql."<br>".$conn->error."<br>";
+                                echo "<h2>Kontrollieren Sie Ihre Eingaben</h2>";
+                        }
+                 }
+                 function showSql($sql){
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "dictionarydb";
+        
+                        $conn = new mysqli($servername, $username, $password, $dbname); 
+        
+                        $result = $conn->query($sql);
+                        echo "</br>";
+                        if($result->num_rows > 0){
+                                while($row = $result->fetch_assoc()){
+                                        echo "<tr>";
+                                        echo "<td>".$row['deutsch'];
+                                        echo "<td>".$row['english'];
+                                        echo "<td>".$row['türkçe']."</br>";
+                                }
+                        }
+                        else{
+                                echo "Belirlediğiniz Tarihte Kar Kaydıdı bulunmamiş";
+                                return 0;
+                        }
+        
+                }
+        }
+        $sqlC = new sqlController();
 
-                <label>Mevsin Salatası</label> 
-                <input type="number" value="0" min="0" id="mevsinCount" name="mevsinCount" style="margin-left: -10%;"><br><br>
-
-                <label>Gün Salatası</label> <input type="number" value="0" min="0" id="gunSalataCount" name="gunSalataCount" style="margin-left: -3%;"><br><br>
-
-                <label>Sufle</label> <input type="number" value="0" min="0" id="sufleCount" name="sufleCount" style="margin-left: 12%;"><br><br>
-
-                <label>Sütlaç</label> <input type="number" value="0" min="0" id="sutlacCount" name="sutlacCount" style="margin-left: 10%;"><br><br>
+        if(isset($_POST['saveSumbit'])){
+                $todayDate = date('Y-m-d', time()); 
+                $deWort = $_POST['deutschWort'];
+                $enWord = $_POST['englihWord'];
+                $trKelime = $_POST['turkceKelime'];
+                $comment = $_POST['comment'];
+                if($deWort != '' || $enWord != '' && $trKelime != ''){
+                $sqlC->sqlQueryDone("INSERT INTO `dictionarytable` (`dates`, `deutsch`, `english`, `türkçe`,`comment`) VALUES ('$todayDate', '$deWort', '$enWord', '$trKelime','$comment');");
+                }
                 
-        </div>
+        }
+        else if(isset($_POST['listSumbit'])){
+                header("Refresh:0");
 
-        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 20%; margin-top: 10%;" class="btn btn-primary">Kaydet</Button>
-        </form>
-
-        <form action="fiyatBelirlemePaneli.php">
-                <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 46%; margin-top: 2.5%;" class="btn btn-primary">Fiyat Belirle</Button>
-        </form>
+        }
+        else{
+                echo "";
+        }
+        ?>
 </body>
+
 </html>
