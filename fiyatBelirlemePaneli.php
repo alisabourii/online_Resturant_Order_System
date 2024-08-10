@@ -82,8 +82,8 @@
                 
         </div>
 
-        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 20%; margin-top: 10%;" class="btn btn-primary">Güncelle</Button><br>
+        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: 12%; margin-top: 10%;" class="glow-on-hover">Güncelle</Button><br>
         </form>
-        <Button onclick="location.href='index.php'" style="margin-left: 47%; margin-top: 3%;" class="btn btn-primary">Ana Sayfa</Button>
+        <Button onclick="location.href='index.php'" style="margin-left: 39.5%; margin-top: 3%;" class="glow-on-hover">Ana Sayfa</Button>
 </body>
 </html>

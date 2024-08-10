@@ -21,100 +21,100 @@
         <Button type="sumbit" name='sumbitYil' id="sumbitYil" style="margin-left: 4%; margin-top: 10%;" class="glow-on-hover" style="width: 40%;">Yıllık</Button>
     </form>
         <br><br>
+    <div class="scrollDiv">
+            <table border='5' style="text-align:center;">
+            <thead>    <!--Table Head-->
+                <th>Tarih</th>   <!--Table Heading-->
+                <th>Sipareşler</th> 
+                <th>Toplam turari</th> 
+            </thead>
+            <tbody>     <!--Table Body-->
+            <?php 
+            function sqlHesapTable($sql){      
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "test1";
 
-        <table border='5' style="text-align:center;">
-        <thead>    <!--Table Head-->
-            <th>Tarih</th>   <!--Table Heading-->
-            <th>Sipareşler</th> 
-            <th>Toplam turari</th> 
-        </thead>
-        <tbody>     <!--Table Body-->
-        <?php 
-        function sqlHesapTable($sql){      
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "test1";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["tarih"];
-                    echo "<td>". $row["orders"];
-                    echo "<td>". $row["totoalPrice"]."<br>"."<br>";
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
                 }
-            } else {
-                echo "0 results";
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["tarih"];
+                        echo "<td>". $row["orders"];
+                        echo "<td>". $row["totoalPrice"]."<br>"."<br>";
+                    }
+                } else {
+                    echo "0 results";
+                }
+                $conn->close();
             }
-            $conn->close();
-        }
-        function totalSels($sql){      
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "test1";
+            function totalSels($sql){      
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "test1";
 
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                $result = $conn->query($sql);
+                if($result->num_rows >0){
+                    $row = $result->fetch_assoc();
+                    $total = $row['Total'];
+                    echo "<h3>Toplam: ". $total ."</h3>";
+                }
+                else{
+                    echo "Sonuç Bulunmadı";
+                }
             }
-            $result = $conn->query($sql);
-            if($result->num_rows >0){
-                $row = $result->fetch_assoc();
-                $total = $row['Total'];
-                echo "<h1>Toplam: ". $total ."</h1>";
+
+            $todayDate = date('Y-m-d', time());
+            $lastmonth ="2024-06-30";
+
+            function foundDate($command){
+            $date = new DateTime();
+            $lastMonth = $date->modify("".$command."");
+            return $date->format('Y-m-d');
             }
-            else{
-                echo "Sonuç Bulunmadı";
+
+            $totalStatus = 0;
+
+            if (isset($_POST['sumbitGun'])) {
+                sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-1 day"))."'");            
+                $totalStatus =1; 
             }
-        }
+            else if(isset($_POST["sumbitHafta"])) {
+                sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-7 day"))."'");
+                $totalStatus =2; 
+            } 
+            else if(isset($_POST["sumbitAy"])) {
+                sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
+                $totalStatus =3; 
+            }
+            else if(isset($_POST["sumbitYil"])) {
+                sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last year"))."'");
+                $totalStatus =4; 
+            }
+            ?>
 
-        $todayDate = date('Y-m-d', time());
-        $lastmonth ="2024-06-30";
-
-        function foundDate($command){
-        $date = new DateTime();
-        $lastMonth = $date->modify("".$command."");
-        return $date->format('Y-m-d');
-        }
-
-        $totalStatus = 0;
-
-        if (isset($_POST['sumbitGun'])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-1 day"))."'");            
-            $totalStatus =1; 
-        }
-        else if(isset($_POST["sumbitHafta"])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("-7 day"))."'");
-            $totalStatus =2; 
-        } 
-        else if(isset($_POST["sumbitAy"])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last month"))."'");
-            $totalStatus =3; 
-        }
-        else if(isset($_POST["sumbitYil"])) {
-            sqlHesapTable("SELECT * from resturanttable WHERE tarih > '".(foundDate("last year"))."'");
-            $totalStatus =4; 
-        }
-        ?>
-
-        </tbody>
-        <tfooter>
-        </tfooter>
-    </table>
-    
+            </tbody>
+            <tfooter>
+            </tfooter>
+        </table>
+    </div>
     <?php
         if($totalStatus == 1)
             totalSels("SELECT SUM(totoalPrice) as Total from resturanttable WHERE tarih > '".(foundDate("-1 day"))."'");

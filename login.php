@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,42 +7,43 @@
         <title>Document</title>
         <link rel="stylesheet" href="style.css">
 </head>
-<?php 
-        $userID =  $userPASS = "";
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-                $userID = inputRecorder($_POST["userID"]);
-                $userPASS = inputRecorder($_POST["userPass"]);
-        }
 
-        function inputRecorder($data){
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-        }
-?>
 <body>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <img src="src/img/lock200.png" style="margin-left: 42%; margin-top: 5%;"><br>
+        <form action="" method="post">
+                <img src="src/img/lock200.png" style="margin-left: 42%; margin-top: 1%;"><br>
 
                 <div style="margin-left: 43%;">
-                        <p style="margin-left: 4%;">Kullanıcı Adı:</p> <input type="text"  name="userID">
-                        <p style="margin-left: 8%;">Şifre</p> <input type="text" id="userPass" name="userPass"><br>
+                        <h4 style="margin-left: 4%;"> Kullanıcı Adı:</h4> <input type="text"  name="userID" id="userID">
+                        <h4 style="margin-left: 8%;">Şifre</h4> <input type="password" id="userPass" name="userPass" id="userPass"><br>
 
-                        <Button type="sumbit" name='sumbit' id="sumbit" style="margin-left: -3%; margin-top: 5%;" class="glow-on-hover">Kaydet</Button>
+                        <Button type="sumbit" name='login' id="login" style="margin-left: -3%; margin-top: 5%;" class="glow-on-hover">Giriş</Button>
                 </div>
         </form>
 </body>
 </html>
 
 <?php 
-        function loginControl($userID){
-                if($userID == "AliSbr" && $userID == "123456"){
+        session_start();
+        function loginControl($userID, $userPass){
+                if($userID == "AliSbr" && $userPass== "12052006"){
                         echo "<script> location.href='/index.php'; </script>";
+                        $_SESSION["userSatae"] = "root";
+                        exit;
+
+                }
+                else if($userID == "Random1" && $userPass== "159753"){
+                        echo "<script> location.href='/index.php'; </script>";
+                        $_SESSION["userSatae"] = "worker";
                         exit;
                 }
                 else{
-                        echo "Hatalı Değer";
+                        echo "Hatalı Giriş";
                 }
         }
+        if(isset($_POST['login'])){
+                $id = $_POST['userID'];
+                $pass = $_POST['userPass'];
+                loginControl($id, $pass);
+        }
+        
 ?>

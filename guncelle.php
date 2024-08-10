@@ -44,7 +44,7 @@ $conn = new mysqli($servername,$username,$password,$dbname);
                 SufleFiyat='$sufle',
                 SutlacFiyat='$sutlc'
                  WHERE id=1";
-if($conn->query($sql) === TRUE) {echo '<div style="margin-left: 30%; margin-top: 5%; font-size: 32px;">Güncelleme  Başarılıle Tamamladnı</div>'; echo '<br><br>';}
+if($conn->query($sql) === TRUE) {echo '<div style="margin-left: 30%; margin-top: 5%; font-size: 32px; color:white">Güncelleme  Başarılıle Tamamladnı</div>'; echo '<br><br>';}
 else{echo 'Error: '.$sql."<br>".$conn->error;}
 ?>
 
@@ -57,7 +57,7 @@ else{echo 'Error: '.$sql."<br>".$conn->error;}
    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <Button type="sumbit" onclick="location.href='fiyatBelirlemePaneli.php'" style="margin-left: 30%; margin-top: 10%;" class="btn btn-primary">Fiyat Belirle</Button>
-   <Button type="sumbit" onclick="location.href='index.php'" style="margin-left: 20%; margin-top: 10%;" class="btn btn-primary">Ana Sayfa</Button>
+   <Button type="sumbit" onclick="location.href='fiyatBelirlemePaneli.php'" style="margin-left: 25%; margin-top: 10%;" class="glow-on-hover">Fiyat Belirle</Button>
+   <Button type="sumbit" onclick="location.href='index.php'" style="margin-left: 20%; margin-top: 10%;" class="glow-on-hover">Ana Sayfa</Button>
 </body>
 </html>

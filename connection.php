@@ -143,8 +143,8 @@ foreach($row as $rows)
                 echo "Toplam Fiyat:  ". $toplamFiyat; echo '<br><br>';
                 echo "</div>";
         
-                echo "<div style='margin-left: 30%; margin-top: 3%; font-size:30px'>";
-                echo '<form action="index.php" method="POST"> <button style="margin-left: 20%;">Sayfaya Dön</button> </form>';
+                echo "<div style='margin-left: 25%; margin-top: 3%; font-size:30px'>";
+                echo '<form action="index.php" method="POST"> <button style="margin-left: 20%;" class="glow-on-hover">Sayfaya Dön</button> </form>';
                 echo "</div>";
         }
 }
