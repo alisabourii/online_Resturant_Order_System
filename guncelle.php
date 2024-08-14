@@ -55,6 +55,8 @@ else{echo 'Error: '.$sql."<br>".$conn->error;}
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Document</title>
    <link rel="stylesheet" href="style.css">
+   <link rel="icon" type="image/x-icon" href="/src/img/ACEIcon.ico">
+
 </head>
 <body>
    <Button type="sumbit" onclick="location.href='fiyatBelirlemePaneli.php'" style="margin-left: 25%; margin-top: 10%;" class="glow-on-hover">Fiyat Belirle</Button>
